@@ -54,10 +54,12 @@ def build_data_set(filename):
         'venit': venit
     })
 
-    for j in dataset.columns:
-        nr = np.random.randint(50, 101)
-        index = np.random.choice(dataset.index, size=nr, replace=False)
-        dataset.loc[index, j] = np.nan
+    for column in dataset.columns:
+        if column != 'venit':
+            nr = np.random.randint(50, 101)
+            index = np.random.choice(dataset.index, size=nr, replace=False)
+            dataset.loc[index, column] = np.nan
 
     dataset.to_csv(filename, index=False)
     print("Setul de date a fost salvat in: " + filename)
+    print('\n')
