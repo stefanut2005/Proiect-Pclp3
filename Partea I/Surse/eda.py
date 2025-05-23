@@ -45,5 +45,32 @@ def eda(filename):
         plt.xticks(rotation=45)
         plt.tight_layout()
         plt.show()
+    
+    numerice = dataset.select_dtypes(include=['float64'])
+    corelatii = numerice.corr()
+    plt.figure(figsize=(10, 8))
+    sns.heatmap(corelatii, annot=True, fmt=".2f", cmap="coolwarm", square=True)
+    plt.title("Matricea de corelatii intre variabilele numerice")
+    plt.show()
+    
+    numerice = dataset.select_dtypes(include=['float64']).columns.drop('venit')
+    for column in numerice:
+        plt.figure(figsize=(6, 4))
+        sns.scatterplot(x=dataset[column], y=dataset['venit'], hue=dataset['venit'], palette='magma', legend=True)
+        plt.title(f'{column} vs Venit')
+        plt.xlabel(column)
+        plt.ylabel('Venit')
+        plt.tight_layout()
+        plt.show
+
+    for column in categoriale:
+        plt.figure(figsize=(8, 5))
+        sns.violinplot(x=dataset[column], y=dataset['venit'], palette='Set3')
+        plt.title(f'Venit in functie de {column}')
+        plt.xlabel(column)
+        plt.ylabel('Venit')
+        plt.xticks(rotation=45)
+        plt.tight_layout()
+        plt.show()
 
     return filled_dataset_filename
